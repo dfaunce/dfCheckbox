@@ -1,26 +1,3 @@
-function _dfIsObject(item) {
-    return (item && typeof item === 'object' && !Array.isArray(item));
-  }
-  
-  function _dfMergeDeep(target, ...sources) {
-    if (!sources.length) return target;
-    const source = sources.shift();
-  
-    if (_dfIsObject(target) && _dfIsObject(source)) {
-      for (const key in source) {
-        if (_dfIsObject(source[key])) {
-          if (!target[key]) Object.assign(target, { [key]: {} });
-          _dfMergeDeep(target[key], source[key]);
-        } else {
-          Object.assign(target, { [key]: source[key] });
-        }
-      }
-    }
-  
-    return _dfMergeDeep(target, ...sources);
-  }
-
-
 Element.prototype.dfCheckbox = function(options) {
     
     if (this.parentNode.classList.contains("_dfCheckbox_label")) return;
@@ -30,9 +7,33 @@ Element.prototype.dfCheckbox = function(options) {
 
     var defaults = {
       size: "normal",
-      side: "left",  //Checkbox is left-side of label
-      label: {
-        title: this.getAttribute("title") || null,
+      sizeProps: {
+        small: {
+            checkbox: {
+                width: "0.63em",
+                height: "0.63em",
+                fontSize: "0.43em",
+                marginTop: "-1px"
+            },
+            label: {
+                fontSize: "0.85em"
+            }
+        },
+        large: {
+            checkbox: {
+                width: "0.88em",
+                height: "1em",
+                fontSize: "0.68em",
+                marginTop: "initial"
+            },
+            label: {
+                fontSize: "1.05em"
+            }
+        }
+      },
+      side: "left",
+      title: this.getAttribute("title") || null,  
+      labelStyles: {
         fontWeight: null,
         fontSize: null,
         color: null,
@@ -44,84 +45,61 @@ Element.prototype.dfCheckbox = function(options) {
         checkedClass: null,
         uncheckedClass: null
       },
-      icons: {
-        checked: null,
-        unchecked: null
-      },
-      cursor: "pointer",
-      disabledProps:  {
-        disabled: this.disabled,
-        cursor: "not-allowed",
-        opacity: 0.7
-      }, 
+      cursor: "pointer",     
       width: "fit-content"
     };
 
-    this.style.display = "none";
+    function _dfIsObject(item) {
+        return (item && typeof item === 'object' && !Array.isArray(item));
+    }
+
+    function _dfMergeDeep(target, ...sources) {
+        if (!sources.length) return target;
+        const source = sources.shift();
+        if (_dfIsObject(target) && _dfIsObject(source)) {
+            for (const key in source) {
+                if (_dfIsObject(source[key])) {
+                    if (!target[key]) Object.assign(target, { [key]: {} });
+                _dfMergeDeep(target[key], source[key]);
+                } else {
+                    Object.assign(target, { [key]: source[key] });
+                }
+            }
+        }
+        return _dfMergeDeep(target, ...sources);
+    }
     
-    var settings = (options !== null) ? _dfMergeDeep({}, defaults, options) : defaults;
-    
-    console.log(settings.disabledProps);
 
-    var id = this.id || null;
-      
 
-    //Get Label Styles
-    var labelStyles = [];
-    if (settings.label.fontWeight !== null)
-        labelStyles.push(`font-weight:${settings.label.fontWeight};`);
-
-    if (settings.label.fontSize !== null) 
-        labelStyles.push(`font-size:${settings.label.fontSize};`);
-
-    if (settings.label.color !== null)
-        labelStyles.push(`color:${settings.label.color};`);
-
-    if (settings.label.backgroundColor !== null) 
-        labelStyles.push(`background-color:${settings.label.backgroundColor}`);
-
-    if (settings.label.padding !== null)
-        labelStyles.push(`padding:${settings.label.padding};`);
-    
-    if (settings.label.margin !== null)
-        labelStyles.push(`margin:${settings.label.margin};`);  
-
-    if (settings.label.textDecoration !== null)
-        labelStyles.push(`text-decoration:${settings.label.textDecoration};`);
-
-    if (settings.label.fontFamily !== null)
-        labelStyles.push(`font-family:${settings.label.fontFamily};`);
-
-    var labelStyle = (labelStyles.length > 0) ? labelStyles.join("") : "";
-    
+    this.style.display = "none";    
+    var settings = (options !== null) ? _dfMergeDeep({}, defaults, options) : defaults;    
+    var id = this.id || null;      
     
     //Create the label
     const $LABEL = document.createElement("label");
     $LABEL.classList.add("_dfCheckbox_label");
     $LABEL.setAttribute("data-dfcid", id);
     $LABEL.setAttribute("style", "display:flex;width:auto;");
+    $LABEL.style.cursor = settings.cursor;
 
     const $TITLE = document.createElement("span");
     $TITLE.classList.add("_dfCheckbox_title");
-    $TITLE.innerHTML = settings.label.title;
-    $TITLE.setAttribute("style", labelStyle);
+    $TITLE.innerHTML = settings.title;
+
+    //Setting the Title CSS Style Properties
+    Object.keys(settings.label).forEach(key => {
+        if (settings.label[key] != null) {
+         $TITLE.style[key] = settings.label[key];
+        }
+     });
 
     $LABEL.append($TITLE);
 
-    
-    if (settings.disabledProps.disabled === true) {
-      $LABEL.disabled = true;
-      $LABEL.style.opacity= settings.disabledProps.opacity;
-      $LABEL.style.cursor = settings.disabledProps.cursor;
-    }
-    else {
-        $LABEL.disabled = false;
-        $LABEL.style.opacity= "initial";
-        $LABEL.style.cursor = settings.cursor;
-    }
+     
+    //Setting Label Width
+    $LABEL.style.width = settings.width;
     
     //Wrap the checkbox inside the label
-    //_dfCheckboxwrap(this, $LABEL);
     this.parentNode.insertBefore($LABEL, this);
     $LABEL.appendChild(this);
 
@@ -141,6 +119,7 @@ Element.prototype.dfCheckbox = function(options) {
     $uncheckbox.append($_uncheckbox);
       
     
+    // Setting the checkbox orientation
     if (settings.side === "right") {
       $LABEL.append($checkbox);
       $LABEL.append($uncheckbox);
@@ -154,26 +133,19 @@ Element.prototype.dfCheckbox = function(options) {
       $uncheckbox.style.marginRight = "5px";
     }
 
-    $LABEL.style.width = settings.width;
+    //Setting the checkbox scale
+    if (settings.size == "small" || settings.size == "large") {
+        var $o = settings.sizeProps[settings.size];
+        $TITLE.style.fontSize = $o.label.fontSize;
+        $checkbox.style.width = $o.checkbox.width;
+        $checkbox.style.height = $o.checkbox.height;
+        $_checkbox.style.fontSize = $o.checkbox.fontSize;
+        $_checkbox.style.marginTop = $o.checkbox.marginTop;
 
-    if (settings.size == "small") {
-        $TITLE.style.fontSize = "0.8em";
-        $checkbox.style.width = "10px";
-        $checkbox.style.height = "12px";
-        $checkbox.style.fontSize = "8px";
-        $uncheckbox.style.width = "10px";
-        $uncheckbox.style.height = "12px";
-        
+        $uncheckbox.style.width = $o.checkbox.width;
+        $uncheckbox.style.height = $o.checkbox.height;
     }
-    else if (settings.size == "large") {
-        $TITLE.style.fontSize = "1.05em";
-        $checkbox.style.width = "14px";
-        $checkbox.style.height = "16px";
-        $checkbox.style.fontSize = "18px";
-        $uncheckbox.style.width = "16px";
-        $uncheckbox.style.height = "18px";
-    }
-
+   
 
     function DisplayCheck() {
         if ($CHK.checked === true) {
@@ -195,32 +167,12 @@ Element.prototype.dfCheckbox = function(options) {
             $TITLE.classList.add(settings.label.uncheckedClass);  
         }
     }
-
-
-
-         
-
     function CheckboxClicked() {
         if ($LABEL.disabled === true)  return;
         DisplayCheck();
     }
-
     $CHK.addEventListener("click", CheckboxClicked);
     $LABEL.addEventListener("click", CheckboxClicked);
 
     DisplayCheck();
   }
-  
-/*
-var $chk = document.getElementById("chk");
-$chk.dfCheckbox(
-    { 
-        size: "large",
-        label: 
-            { 
-            color: "#990000",
-            fontWeight: "bold"
-        }
-    }
-);
-*/
