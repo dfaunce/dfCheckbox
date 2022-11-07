@@ -1,3 +1,12 @@
+/*
+    Title:  dfCheckbox.js
+    Author: David Faunce,
+    Date:   2022-11-07
+    Rev:    0.0.0.4
+    Requirements: N/A
+    Usage:
+        document.getElementById("mycheckbox").dfCheckbox();
+*/
 Element.prototype.dfCheckbox = function(options) {
     
     if (this.parentNode.classList.contains("_dfCheckbox_label")) return;
@@ -6,28 +15,18 @@ Element.prototype.dfCheckbox = function(options) {
     var $CHK = this;
 
     var defaults = {
-      size: "normal",
+      size: null,
       sizeProps: {
-        small: {
-            checkbox: {
-                width: "0.63em",
-                height: "0.63em",
-                fontSize: "0.43em"
-            },
-            label: {
-                fontSize: "0.85em"
-            }
+        checkbox: {
+            width: "0.7em",
+            height: "0.81em",
+            fontSize: "0.55em",
+            marginTop: "0.13em",
+            separation: "0.43em"
         },
-        large: {
-            checkbox: {
-                width: "0.88em",
-                height: "1em",
-                fontSize: "0.68em",
-                marginTop: "initial"
-            },
-            label: {
-                fontSize: "1.05em"
-            }
+        label: {
+            fontSize: "1em",
+            fontWeight: "600"
         }
       },
       checkedClass: null,
@@ -48,6 +47,59 @@ Element.prototype.dfCheckbox = function(options) {
       },
       cursor: "pointer",     
       width: "fit-content"
+    };
+
+    const small = {
+        checkbox: {
+            width: "0.52em",
+            height: "0.63em",
+            fontSize: "0.43em",
+            marginTop: "0.08em",
+            separation: "0.3em"
+        },
+        label: {
+            fontSize: "0.8em",
+            fontWeight: "600"
+        }
+    };
+    const normal = {
+        checkbox: {
+            width: "0.7em",
+            height: "0.81em",
+            fontSize: "0.55em",
+            marginTop: "0px",
+            separation: "0.5em"
+        },
+        label: {
+            fontSize: "1em",
+            fontWeight: "600"
+        }
+    };
+    const lg = {
+        checkbox: {
+            width: "0.88em",
+            height: "1em",
+            fontSize: "0.68em",
+            marginTop: "0.2em",
+            separation: "0.6em"
+        },
+        label: {
+            fontSize: "1.25em",
+            fontWeight: "400"
+        }
+    };
+    const xlg = {
+        checkbox: {
+            width: "1.2em",
+            height: "1.3em",
+            fontSize: "0.9em",
+            marginTop: "0.36em",
+            separation: "0.8em"
+        },
+        label: {
+            fontSize: "1.9em",
+            fontWeight: "400"
+        }
     };
 
     function _dfIsObject(item) {
@@ -106,7 +158,7 @@ Element.prototype.dfCheckbox = function(options) {
 
     //Create the CHECKBOX and UNCHECKED BOX
     var $checkbox = document.createElement("div");
-    $checkbox.setAttribute("style", "padding:0px 1px;border:1px solid #ccc;width:12px;height:14px;text-align:center;margin-top:1px;");
+    $checkbox.setAttribute("style", "padding:0px 1px;border:1px solid #ccc;width:12px;height:14px;text-align:center;");
     $checkbox.classList.add("_dfCheckbox_checked");      
     var $_checkbox = document.createElement("div");
     $_checkbox.setAttribute("style", "font-size:10px;font-weight:bold;");
@@ -114,39 +166,76 @@ Element.prototype.dfCheckbox = function(options) {
     $checkbox.append($_checkbox);
     
     var $uncheckbox = document.createElement("div");
-    $uncheckbox.setAttribute("style", "padding:0px 1px;border:1px solid #ccc;width:12px;height:14px;text-align:center;margin-top:1px;");
+    $uncheckbox.setAttribute("style", "padding:0px 1px;border:1px solid #ccc;width:12px;height:14px;text-align:center;");
     $uncheckbox.classList.add("_dfCheckbox_unchecked");      
     var $_uncheckbox = document.createElement("div");    
     $uncheckbox.append($_uncheckbox);
       
     
-    // Setting the checkbox orientation
-    if (settings.side === "right") {
-      $LABEL.append($checkbox);
-      $LABEL.append($uncheckbox);
-      $checkbox.style.marginLeft = "5px";
-      $uncheckbox.style.marginLeft = "5px";
+
+    var $o;
+
+    if (settings.size === null) {
+        console.log("sizeprops!");
+        $o = settings.sizeProps;
     }
     else {
-      $LABEL.prepend($checkbox);
-      $LABEL.prepend($uncheckbox);
-      $checkbox.style.marginRight = "5px";
-      $uncheckbox.style.marginRight = "5px";
+        switch(settings.size) {
+            case "small":
+                $o = small;
+                console.log("small");
+                break;
+            case "large":
+                $o = lg;
+                console.log("large");
+                break;
+            case "xlarge":
+                $o = xlg;
+                console.log("x-large");
+                break;
+            case "normal":
+            default:
+                $o = normal;
+                console.log("normal");
+                break;
+        }
+        console.log("");
     }
+
+    console.log($o);
 
     //Setting the checkbox scale
-    if (settings.size == "small" || settings.size == "large") {
-        var $o = settings.sizeProps[settings.size];
-        $TITLE.style.fontSize = $o.label.fontSize;
-        $checkbox.style.width = $o.checkbox.width;
-        $checkbox.style.height = $o.checkbox.height;
-        $_checkbox.style.fontSize = $o.checkbox.fontSize;
-        $_checkbox.style.marginTop = $o.checkbox.marginTop;
+    $TITLE.style.fontSize = $o.label.fontSize;
+    $checkbox.style.width = $o.checkbox.width;
+    $checkbox.style.height = $o.checkbox.height;
+    
+    $checkbox.style.marginTop = $o.checkbox.marginTop;
 
-        $uncheckbox.style.width = $o.checkbox.width;
-        $uncheckbox.style.height = $o.checkbox.height;
-    }
+    $_checkbox.style.fontSize = $o.checkbox.fontSize;
+    //$_checkbox.style.marginTop = $o.checkbox.marginTop;
+    $_checkbox.style.fontWeight = $o.checkbox.fontWeight;
+
+    $uncheckbox.style.width = $o.checkbox.width;
+    $uncheckbox.style.height = $o.checkbox.height;
+    $uncheckbox.style.marginTop = $o.checkbox.marginTop;
    
+
+        // Setting the checkbox orientation
+        if (settings.side === "right") {
+            $LABEL.append($checkbox);
+            $LABEL.append($uncheckbox);
+            $checkbox.style.marginLeft = $o.checkbox.separation;
+            $uncheckbox.style.marginLeft =  $o.checkbox.separation;
+          }
+          else {
+            $LABEL.prepend($checkbox);
+            $LABEL.prepend($uncheckbox);
+            $checkbox.style.marginRight =  $o.checkbox.separation;
+            $uncheckbox.style.marginRight = $o.checkbox.separation;
+          }
+      
+
+
     var c = settings.checkedClass != null && settings.checkedClass.length > 0;
     var u = settings.uncheckedClass != null && settings.uncheckedClass.length > 0;
 
@@ -158,8 +247,11 @@ Element.prototype.dfCheckbox = function(options) {
             if (c) {
                 if (u) {
                     $LABEL.classList.remove(settings.uncheckedClass);
+                    $TITLE.classList.remove(settings.uncheckedClass);
                 }                
-                $LABEL.classList.add(settings.checkedClass);                
+                $LABEL.classList.add(settings.checkedClass);         
+                $TITLE.classList.add(settings.checkedClass);     
+                $checkbox.classList.add(settings.checkedClass);  
             }
         }
         else {
@@ -170,6 +262,8 @@ Element.prototype.dfCheckbox = function(options) {
                     $LABEL.classList.remove(settings.checkedClass);
                 }                
                 $LABEL.classList.add(settings.uncheckedClass);
+                $TITLE.classList.add(settings.uncheckedClass);
+                $uncheckbox.classList.add(settings.uncheckedClass);  
             }           
         }
     }
@@ -182,4 +276,3 @@ Element.prototype.dfCheckbox = function(options) {
 
     DisplayCheck();
   }
-  
