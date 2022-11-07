@@ -36,6 +36,7 @@ The following object depicts the default parameters that are used if the user do
 *Note: if defaults.size is NULL then the code defaults to defaults.sizeProps
 ```
 var defaults = {
+      title: this.getAttribute("title") || null,
       size: null,
       side: "left",
       sizeProps: {
@@ -52,8 +53,7 @@ var defaults = {
         }
       },
       checkedClass: null,
-      uncheckedClass: null,      
-      title: this.getAttribute("title") || null,  
+      uncheckedClass: null,        
       labelStyles: {
         fontWeight: null,
         fontSize: null,
@@ -62,13 +62,11 @@ var defaults = {
         padding: null,
         margin: null,
         textDecoration: null,
-        fontFamily: null,        
-        checkedClass: null,
-        uncheckedClass: null
+        fontFamily: null
       },
       cursor: "pointer",     
       width: "fit-content"
-    };
+};
 
 ```
 
