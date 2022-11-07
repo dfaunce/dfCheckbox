@@ -59,7 +59,7 @@ var defaults = {
         uncheckedClass: null
       },
       icons: {
-        checked: null,     //Default Checkbox is ASCII code: `&#10003;`
+        checked: null, 
         unchecked: null
       },
       cursor: "pointer",
@@ -89,7 +89,7 @@ var defaults = {
    - **checkedClass:** `[string]`  *Apply a css class to the title/label when checkbox is checked*
    - **uncheckedClass:** `[string]` *Apply a css clas to the title/label when checkbox is UNCHECKED*
  - **icons** `[object]` *Only to be used in conjunction with an icon library - icon library is not required.*
-   - **checked:** `[string]`  *Used with an icon library, notate the class for the "checked" status. (Default checkbox is ASCII &#10003;)*
+   - **checked:** `[string]`  *Used with an icon library, notate the class for the "checked" status. (Default checkbox is ASCII code &#10003;)*
    - **unchecked:** `[string]` *Used with an icon library, notate the class for the "unchecked" status.*
  - **cursor:** `[string]`    `css cursor, ie: "default", "pointer", "not-allowed", "cross-hair", ...` *Hovered cursor style of the dfCheckbox*
  - **disabledProps:** `[object]`   *What is visible when the checkbox is disabled.*
