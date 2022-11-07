@@ -2,7 +2,7 @@
     Title:  dfCheckbox.js
     Author: David Faunce,
     Date:   2022-11-07
-    Rev:    0.0.0.4
+    Rev:    0.0.0.5
     Requirements: N/A
     Usage:
         document.getElementById("mycheckbox").dfCheckbox();
@@ -212,7 +212,6 @@ Element.prototype.dfCheckbox = function(options) {
     $checkbox.style.marginTop = $o.checkbox.marginTop;
 
     $_checkbox.style.fontSize = $o.checkbox.fontSize;
-    //$_checkbox.style.marginTop = $o.checkbox.marginTop;
     $_checkbox.style.fontWeight = $o.checkbox.fontWeight;
 
     $uncheckbox.style.width = $o.checkbox.width;
