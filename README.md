@@ -88,8 +88,8 @@ var defaults = {
      - **fontWeight:** `[string]`
  - **checkedClass:** `[string]`  *Apply a css class to the title/label when checkbox is checked*
  - **uncheckedClass:** `[string]` *Apply a css clas to the title/label when checkbox is UNCHECKED*
- - **labelStyles:** `[object]`   *For styling the text label*
-   ***Any javascript notated stylings such as:
+ - **labelStyles:** `[object]`   *For styling the text label*<br>
+   ***Any javascript notated stylings such as:***
    - **fontWeight:** `[string]`
    - **fontSize:** `[string]`
    - **color:** `[string]`
