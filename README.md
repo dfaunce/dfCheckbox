@@ -97,5 +97,4 @@ var defaults = {
    - **padding:** `[string]`
    - **margin:** `[string]` 
  - **cursor:** `[string]`    `css cursor, ie: "default", "pointer", "not-allowed", "cross-hair", ...` *Hovered cursor style of the dfCheckbox*
- - **width:** `[string]`  *Sets the css style of the width of the dfCheckbox
-
+ - **width:** `[string]`  *Sets the css style of the width of the dfCheckbox*
