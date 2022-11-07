@@ -16,7 +16,7 @@ Element.prototype.dfCheckbox = function(options) {
                 marginTop: "-1px"
             },
             label: {
-                fontSize: "0.85em"
+                fontSize: "0.8em"
             }
         },
         large: {
@@ -87,9 +87,9 @@ Element.prototype.dfCheckbox = function(options) {
     $TITLE.innerHTML = settings.title;
 
     //Setting the Title CSS Style Properties
-    Object.keys(settings.label).forEach(key => {
-        if (settings.label[key] != null) {
-         $TITLE.style[key] = settings.label[key];
+    Object.keys(settings.labelStyles).forEach(key => {
+        if (settings.labelStyles[key] != null) {
+         $TITLE.style[key] = settings.labelStyles[key];
         }
      });
 
@@ -150,21 +150,11 @@ Element.prototype.dfCheckbox = function(options) {
     function DisplayCheck() {
         if ($CHK.checked === true) {
             $uncheckbox.style.display = "none";
-            $checkbox.style.display = "block";
-            
-            $LABEL.classList.remove(settings.label.uncheckedClass);
-            $TITLE.classList.remove(settings.label.uncheckedClass);
-            $LABEL.classList.add(settings.label.checkedClass);
-            $TITLE.classList.add(settings.label.checkedClass);   
+            $checkbox.style.display = "block";  
         }
         else {
             $checkbox.style.display = "none";
-            $uncheckbox.style.display = "block";           
-            
-            $LABEL.classList.remove(settings.label.checkedClass);
-            $TITLE.classList.remove(settings.label.checkedClass);
-            $LABEL.classList.add(settings.label.uncheckedClass);
-            $TITLE.classList.add(settings.label.uncheckedClass);  
+            $uncheckbox.style.display = "block";
         }
     }
     function CheckboxClicked() {
