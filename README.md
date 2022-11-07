@@ -15,10 +15,10 @@ $chk.dfCheckbox();
 ```
 
 ## Advanced Usage
-Assume we want to create a checkbox element that is 
-  - Large
+Assume we want to create a checkbox element that: 
+  - Is Large
   - Turns Red when OFF and Green when ON  *(The classes must define the correct styles in your stylesheet)*
-  - Override the title of the label
+  - Overrides the title of the label
 
 ```
 const $chk = document.getElementById("mycheckbox");
@@ -72,7 +72,7 @@ var defaults = {
 
 ### Parameters
  - **title:**  `[string]`  *Sets the title of the checkbox. This overrides the "title" property inside the input element*
- - **size:**  `[string]`      `"normal", "small", "large"`        *Changes the scale of the checkbox element. If this is null, code defaults to `sizeProps`*
+ - **size:**  `[string]`      `"normal", "small", "large", "xlarge"`        *Changes the scale of the checkbox element. If this is null, code defaults to `sizeProps`*
  - **side:**  `[string]`      `"left", "right"`                   *Notates where the checkbox is in relation to the title label*
  - **sizeProps:** `[object]`   
    - **checkbox:** `[object]`   *object of properties for styling the checkbox*
