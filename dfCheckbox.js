@@ -12,11 +12,10 @@ Element.prototype.dfCheckbox = function(options) {
             checkbox: {
                 width: "0.63em",
                 height: "0.63em",
-                fontSize: "0.43em",
-                marginTop: "-1px"
+                fontSize: "0.43em"
             },
             label: {
-                fontSize: "0.8em"
+                fontSize: "0.85em"
             }
         },
         large: {
@@ -31,6 +30,8 @@ Element.prototype.dfCheckbox = function(options) {
             }
         }
       },
+      checkedClass: null,
+      uncheckedClass: null,
       side: "left",
       title: this.getAttribute("title") || null,  
       labelStyles: {
@@ -146,15 +147,30 @@ Element.prototype.dfCheckbox = function(options) {
         $uncheckbox.style.height = $o.checkbox.height;
     }
    
+    var c = settings.checkedClass != null && settings.checkedClass.length > 0;
+    var u = settings.uncheckedClass != null && settings.uncheckedClass.length > 0;
+
 
     function DisplayCheck() {
         if ($CHK.checked === true) {
             $uncheckbox.style.display = "none";
-            $checkbox.style.display = "block";  
+            $checkbox.style.display = "block";
+            if (c) {
+                if (u) {
+                    $LABEL.classList.remove(settings.uncheckedClass);
+                }                
+                $LABEL.classList.add(settings.checkedClass);                
+            }
         }
         else {
             $checkbox.style.display = "none";
             $uncheckbox.style.display = "block";
+            if (u) {
+                if (c) {
+                    $LABEL.classList.remove(settings.checkedClass);
+                }                
+                $LABEL.classList.add(settings.uncheckedClass);
+            }           
         }
     }
     function CheckboxClicked() {
@@ -166,3 +182,4 @@ Element.prototype.dfCheckbox = function(options) {
 
     DisplayCheck();
   }
+  
