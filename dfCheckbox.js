@@ -2,7 +2,7 @@
     Title:  dfCheckbox.js
     Author: David Faunce,
     Date:   2022-11-07
-    Rev:    0.0.0.6
+    Rev:    0.0.0.7
     Requirements: N/A
     Usage:
         document.getElementById("mycheckbox").dfCheckbox();
@@ -130,7 +130,7 @@ Element.prototype.dfCheckbox = function(options) {
     const $LABEL = document.createElement("label");
     $LABEL.classList.add("_dfCheckbox_label");
     $LABEL.setAttribute("data-dfcid", id);
-    $LABEL.setAttribute("style", "display:flex;width:auto;");
+    $LABEL.setAttribute("style", "display:flex;width:auto;align-items:center;");
     $LABEL.style.cursor = settings.cursor;
 
     const $TITLE = document.createElement("span");
