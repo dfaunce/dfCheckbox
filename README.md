@@ -18,33 +18,43 @@ $chk.dfCheckbox();
 Assume we want to create a checkbox element that is 
   - Large
   - Turns Red when OFF and Green when ON  *(The classes must define the correct styles in your stylesheet)*
-  - Utilizes Icomoon icon library
   - Override the title of the label
 
 ```
 const $chk = document.getElementById("mycheckbox");
 $chk.dfCheckbox({
   size: "large",
-  label: {
-    title: "Click me to turn GREEN and RED",
-    checkedClass: "turnGreen",
-    uncheckedClass: "turnRed"
-  },
-  icons: {
-    checked: "icon-checkbox-checked",
-    unchecked: "icon-checkbox-unchecked"
-  }
+  checkedClass: "turnGreen",
+  uncheckedClass: "turnRed",
+  title: "I'm overriding this title!"
 });
 ```
 
 ## Default Parameters
 The following object depicts the default parameters that are used if the user does not declare parameters.
+
+*Note: if defaults.size is NULL then the code defaults to defaults.sizeProps
 ```
 var defaults = {
-      size: "normal",
-      side: "left",  
-      label: {
-        title: this.getAttribute("title") || null,
+      size: null,
+      side: "left",
+      sizeProps: {
+        checkbox: {
+            width: "0.7em",
+            height: "0.81em",
+            fontSize: "0.55em",
+            marginTop: "0.13em",
+            separation: "0.43em"
+        },
+        label: {
+            fontSize: "1em",
+            fontWeight: "600"
+        }
+      },
+      checkedClass: null,
+      uncheckedClass: null,      
+      title: this.getAttribute("title") || null,  
+      labelStyles: {
         fontWeight: null,
         fontSize: null,
         color: null,
@@ -56,46 +66,36 @@ var defaults = {
         checkedClass: null,
         uncheckedClass: null
       },
-      icons: {
-        checked: null, 
-        unchecked: null
-      },
-      cursor: "pointer",
-      disabledProps:  {
-        disabled: this.disabled,
-        cursor: "not-allowed",
-        opacity: 0.7
-      }, 
+      cursor: "pointer",     
       width: "fit-content"
     };
 
 ```
 
 ### Parameters
- - **size:**  `[string]`      `"normal", "small", "large"`        *Changes the scale of the checkbox element*
- - **size:**  `[string]`      `"left", "right"`                   *Notates where the checkbox is in relation to the title label*
- - **label:** `[object]`
-   - **title:** `[string]`    *Overrides the title of the checkbox (Note: You may initialize the title of the checkbox by including a title attribute)*
+ - **title:**  `[string]`  *Sets the title of the checkbox. This overrides the "title" property inside the <input> element*
+ - **size:**  `[string]`      `"normal", "small", "large"`        *Changes the scale of the checkbox element. If this is null, code defaults to `sizeProps`*
+ - **side:**  `[string]`      `"left", "right"`                   *Notates where the checkbox is in relation to the title label*
+ - **sizeProps:** `[object]`   
+   - **checkbox:** `[object]`   *object of properties for styling the checkbox*
+     - **width:** `[string]`    *width of the checkbox*
+     - **height:** `[string]`   *height of the checkbox*
+     - **fontSize:**  `[string]`  *size of the checkmark*
+     - **marginTop:**  `[string]`
+     - **separation:** `[string]`  `ie: "5px" or "0.3em"`   *the distance between the text label and the checkbox*
+   - **label** `[object]`  *object properties for styling the text label*
+     - **fontSize:** `[string]`
+     - **fontWeight:** `[string]`
+ - **checkedClass:** `[string]`  *Apply a css class to the title/label when checkbox is checked*
+ - **uncheckedClass:** `[string]` *Apply a css clas to the title/label when checkbox is UNCHECKED*
+ - **labelStyles:** `[object]`   *For styling the text label*
+   ***Any javascript notated stylings such as:
    - **fontWeight:** `[string]`
    - **fontSize:** `[string]`
    - **color:** `[string]`
    - **backgroundColor:** `[string]`
-   - **padding:** `[string]`   *Controls the padding of the title/label of the checkbox*
-   - **margin:** `[string]` *Controls the margin of the title/label of the checkbox*
-   - **textDecoration:** `[string]`
-   - **fontFamily:** `[string]`
-   - **checkedClass:** `[string]`  *Apply a css class to the title/label when checkbox is checked*
-   - **uncheckedClass:** `[string]` *Apply a css clas to the title/label when checkbox is UNCHECKED*
- - **icons** `[object]` *Only to be used in conjunction with an icon library - icon library is not required.*
-   - **checked:** `[string]`  *Used with an icon library, notate the class for the "checked" status. (Default checkbox is ASCII code &#10003;)*
-   - **unchecked:** `[string]` *Used with an icon library, notate the class for the "unchecked" status.*
+   - **padding:** `[string]`
+   - **margin:** `[string]` 
  - **cursor:** `[string]`    `css cursor, ie: "default", "pointer", "not-allowed", "cross-hair", ...` *Hovered cursor style of the dfCheckbox*
- - **disabledProps:** `[object]`   *What is visible when the checkbox is disabled.*
-   - **disabled:**  `[bool]`  `true, false`  *Override the initial status of the checkbox* 
-   - **cursor:** `[string]` *See previous property 'cursor' for more details*
-   - **opacity:** `[float]`  `opacity > 0 <=> opacity < 1`  *Sets the opacity of the checkbox when it is disabled.*
  - **width:** `[string]`  *Sets the css style of the width of the dfCheckbox
-
-
-
 
