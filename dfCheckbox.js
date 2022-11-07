@@ -2,7 +2,7 @@
     Title:  dfCheckbox.js
     Author: David Faunce,
     Date:   2022-11-07
-    Rev:    0.0.0.5
+    Rev:    0.0.0.6
     Requirements: N/A
     Usage:
         document.getElementById("mycheckbox").dfCheckbox();
@@ -41,9 +41,7 @@ Element.prototype.dfCheckbox = function(options) {
         padding: null,
         margin: null,
         textDecoration: null,
-        fontFamily: null,        
-        checkedClass: null,
-        uncheckedClass: null
+        fontFamily: null,     
       },
       cursor: "pointer",     
       width: "fit-content"
@@ -170,40 +168,30 @@ Element.prototype.dfCheckbox = function(options) {
     $uncheckbox.classList.add("_dfCheckbox_unchecked");      
     var $_uncheckbox = document.createElement("div");    
     $uncheckbox.append($_uncheckbox);
-      
     
-
+    
     var $o;
 
     if (settings.size === null) {
-        console.log("sizeprops!");
         $o = settings.sizeProps;
     }
     else {
         switch(settings.size) {
             case "small":
                 $o = small;
-                console.log("small");
                 break;
             case "large":
                 $o = lg;
-                console.log("large");
                 break;
             case "xlarge":
                 $o = xlg;
-                console.log("x-large");
                 break;
             case "normal":
             default:
                 $o = normal;
-                console.log("normal");
                 break;
         }
-        console.log("");
     }
-
-    console.log($o);
-
     //Setting the checkbox scale
     $TITLE.style.fontSize = $o.label.fontSize;
     $checkbox.style.width = $o.checkbox.width;
