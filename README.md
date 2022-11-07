@@ -1,8 +1,8 @@
 # dfCheckbox
-A pure javascript plugin for stylized checkboxes - Click label or checkbox to activate. Browser must be ES6 compatible.<br>
+A pure javascript plugin for stylized checkboxes - Click label or checkbox to activate instead of clicking directly on the checkbox element.<br>Browser must be ES6 compatible.<br>
 
 ## Required Libraries
-- None *(If you wish to use an icon-library such as font-awesome, icomoon, material, etc... you may substitute that for checkbox icons)*
+- None
 
 ## Basic Usage
 ```
